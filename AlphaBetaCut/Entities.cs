@@ -1,0 +1,80 @@
+﻿using System;
+
+namespace AlphaBetaCut
+{
+    public struct Pos
+    {
+        public int X { get; }
+        public int Y { get; }
+
+        public Pos(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
+    }
+
+    public enum CellStatus
+    {
+        Empty = 0,
+        Black = 1,
+        White = 10,
+    }
+
+    public static class CellStatusHelper
+    {
+        public static CellStatus Not(CellStatus s)
+        {
+            switch (s)
+            {
+                case CellStatus.Black:
+                    return CellStatus.White;
+                case CellStatus.White:
+                    return CellStatus.Black;
+                case CellStatus.Empty:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(s), s, null);
+            }
+            throw new Exception("cellstatus do not valid to not");
+        }
+    }
+
+    public class ABTreeNode
+    {
+        public ABTreeNode(ABTreeItem abTreeItem)
+        {
+            ABTreeItem = abTreeItem;
+        }
+
+        public ABTreeItem ABTreeItem { get; }
+        public ABTreeNode LeftChild { set; get; }
+        public ABTreeNode RightChild { set; get; }
+
+        public ABTreeNode this[int index]
+        {
+            get 
+            {
+                if (index == 0)
+                {
+                    return LeftChild;
+                }
+                if (index == 1)
+                {
+                    return RightChild;
+                }
+                return null;
+            }
+        }
+
+        public override string ToString()
+        {
+            return ABTreeItem.ToString();
+        }
+    }
+}
