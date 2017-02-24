@@ -10,3 +10,6 @@ C:\Users\Administrator.SC-201608021220\Documents\Visual Studio 2015\Projects\Alp
 C:\Users\Administrator.SC-201608021220\Documents\Visual Studio 2015\Projects\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.csproj.GenerateResource.Cache
 C:\Users\Administrator.SC-201608021220\Documents\Visual Studio 2015\Projects\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.exe
 C:\Users\Administrator.SC-201608021220\Documents\Visual Studio 2015\Projects\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.pdb
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\bin\Debug\AlphaBetaCut.exe.config
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.exe
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.pdb

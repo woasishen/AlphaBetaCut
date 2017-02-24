@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace AlphaBetaCut
 {
@@ -63,6 +64,8 @@ namespace AlphaBetaCut
         private int ComputeMaxMin(ABTreeNode treeNode, int deep, int alpha, int beta)
         {
             _computeTimes++;
+            treeNode.ABTreeItem.Alpha = alpha;
+            treeNode.ABTreeItem.Beta = beta;
             var maxGole = int.MinValue;
 
             for (var i = 0; i < 2; i++)
@@ -88,6 +91,7 @@ namespace AlphaBetaCut
 
                 maxGole = Math.Max(maxGole, tempGole);
             }
+            treeNode.ABTreeItem.Best = maxGole;
             return maxGole;
         }
     }
