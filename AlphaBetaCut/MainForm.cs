@@ -40,6 +40,7 @@ namespace AlphaBetaCut
         {
             _maxMin.StartFind();
             startButton.Enabled = false;
+            button.Show();
         }
 
         private void button_Click(object sender, EventArgs e)

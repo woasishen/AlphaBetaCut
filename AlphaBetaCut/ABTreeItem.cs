@@ -10,7 +10,8 @@ namespace AlphaBetaCut
         private const string ALPHA = "α:{0}";
         private const string BETA = "β:{0}";
 
-        private int _best, _alpha, _beta, _gole;
+        private int? _best;
+        private int _alpha, _beta, _gole;
 
         private readonly int _layer, _index;
 
@@ -63,7 +64,7 @@ namespace AlphaBetaCut
             }
         }
 
-        public int Best
+        public int? Best
         {
             set
             {
@@ -115,8 +116,14 @@ namespace AlphaBetaCut
             get { return _gole; }
         }
 
-        private void CheckAndSetString(string str, Label label, int gole)
+        private void CheckAndSetString(string str, Label label, int? gole)
         {
+            if (gole == null)
+            {
+                label.Text = string.Format(str, "X");
+                return;
+            }
+
             if (gole == Configs.MAX)
             {
                 label.Text = string.Format(str, "M");

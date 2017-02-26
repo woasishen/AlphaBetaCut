@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.button = new System.Windows.Forms.Button();
-            this.startButton = new System.Windows.Forms.Button();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
+            this.startButton = new System.Windows.Forms.Button();
+            this.button = new System.Windows.Forms.Button();
             this.abTree = new AlphaBetaCut.ABTree();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
@@ -47,26 +47,6 @@
             this.bottomPanel.Size = new System.Drawing.Size(1643, 248);
             this.bottomPanel.TabIndex = 1;
             // 
-            // button
-            // 
-            this.button.Location = new System.Drawing.Point(42, 82);
-            this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(75, 23);
-            this.button.TabIndex = 0;
-            this.button.Text = "下一步";
-            this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.button_Click);
-            // 
-            // startButton
-            // 
-            this.startButton.Location = new System.Drawing.Point(42, 17);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(75, 23);
-            this.startButton.TabIndex = 1;
-            this.startButton.Text = "开始计算";
-            this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
-            // 
             // richTextBox
             // 
             this.richTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -78,6 +58,27 @@
             this.richTextBox.Size = new System.Drawing.Size(1488, 245);
             this.richTextBox.TabIndex = 2;
             this.richTextBox.Text = "";
+            // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(42, 17);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.TabIndex = 1;
+            this.startButton.Text = "开始计算";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // button
+            // 
+            this.button.Location = new System.Drawing.Point(42, 82);
+            this.button.Name = "button";
+            this.button.Size = new System.Drawing.Size(75, 23);
+            this.button.TabIndex = 0;
+            this.button.Text = "下一步";
+            this.button.UseVisualStyleBackColor = true;
+            this.button.Visible = false;
+            this.button.Click += new System.EventHandler(this.button_Click);
             // 
             // abTree
             // 

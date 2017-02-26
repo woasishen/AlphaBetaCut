@@ -16,13 +16,13 @@ namespace AlphaBetaCut
             LayerIndex = layerIndex;
 
             tableLayoutPanel.ColumnCount = (int) Math.Pow(Configs.CHILD_COUNT, layerIndex);
-            for (int i = 1; i < tableLayoutPanel.ColumnCount; i++)
+            for (var i = 1; i < tableLayoutPanel.ColumnCount; i++)
             {
                 tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             }
 
             ABTreeItems = new ABTreeItem[tableLayoutPanel.ColumnCount];
-            for (int i = 0; i < ABTreeItems.Length; i++)
+            for (var i = 0; i < ABTreeItems.Length; i++)
             {
                 ABTreeItems[i] = new ABTreeItem(layerIndex, i)
                 {

@@ -50,17 +50,11 @@ namespace AlphaBetaCut
     {
         private readonly ABTreeNode[] _abTreeNodeChildren;
 
-        public ABTreeNode(ABTreeItem abTreeItem, bool isLeafNode = false)
+        public ABTreeNode(ABTreeItem abTreeItem)
         {
-            IsLeafNode = isLeafNode;
-            if (!isLeafNode)
-            {
-                _abTreeNodeChildren = new ABTreeNode[Configs.CHILD_COUNT];
-            }
+            _abTreeNodeChildren = new ABTreeNode[Configs.CHILD_COUNT];
             ABTreeItem = abTreeItem;
         }
-
-        public bool IsLeafNode { private set; get; }
 
         public ABTreeItem ABTreeItem { get; }
 
@@ -73,6 +67,19 @@ namespace AlphaBetaCut
         public override string ToString()
         {
             return ABTreeItem.ToString();
+        }
+
+        public static void ShowABCut(ABTreeNode node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            node.ABTreeItem.ShowAbCut();
+            foreach (var child in node._abTreeNodeChildren)
+            {
+                ShowABCut(child);
+            }
         }
 
         public static implicit operator bool(ABTreeNode node)

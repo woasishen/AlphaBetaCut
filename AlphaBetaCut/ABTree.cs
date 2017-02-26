@@ -38,11 +38,11 @@ namespace AlphaBetaCut
             ABTreeLines = new ABTreeLine[LayerCount];
 
             tableLayoutPanel.RowCount = LayerCount;
-            for (int i = 1; i < LayerCount; i++)
+            for (var i = 1; i < LayerCount; i++)
             {
                 tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             }
-            for (int i = 0; i < LayerCount; i++)
+            for (var i = 0; i < LayerCount; i++)
             {
                 ABTreeLines[i] = new ABTreeLine(i, i == LayerCount - 1)
                 {
