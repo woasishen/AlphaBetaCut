@@ -38,7 +38,7 @@
             this.label.Dock = System.Windows.Forms.DockStyle.Left;
             this.label.Location = new System.Drawing.Point(0, 0);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(15, 133);
+            this.label.Size = new System.Drawing.Size(31, 133);
             this.label.TabIndex = 0;
             this.label.Text = "1";
             this.label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -49,11 +49,11 @@
             this.tableLayoutPanel.ColumnCount = 1;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(15, 0);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(31, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(542, 133);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(526, 133);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // ABTreeLine

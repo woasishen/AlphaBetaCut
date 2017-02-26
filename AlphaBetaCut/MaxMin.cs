@@ -6,46 +6,59 @@ namespace AlphaBetaCut
 {
     public class MaxMin
     {
+        readonly Thread _computeThread;
         private int _computeTimes;
         private int _abCut;
         private readonly ABTree _abTree;
         private readonly ABTreeNode _baseNode;
+        private ABTreeNode _lastNode;
 
         public MaxMin(ABTree abtree)
         {
             _abTree = abtree;
             _baseNode = GenTreeNode(0, 0);
+            _computeThread = new Thread(FindBestPos);
+        }
+
+        public void StartFind()
+        {
+            _computeThread.Start();
         }
 
         private ABTreeNode GenTreeNode(int layer, int index)
         {
-            if (layer == _abTree.LayerCount)
+            var isLeafNode = layer == Configs.LAYER_COUNT - 1;
+            var result = new ABTreeNode(_abTree.ABTreeLines[layer].ABTreeItems[index], isLeafNode);
+            if (!isLeafNode)
             {
-                return null;
+                for (int i = 0; i < Configs.CHILD_COUNT; i++)
+                {
+                    result[i] = GenTreeNode(layer + 1, index * Configs.CHILD_COUNT + i);
+                }
             }
-            var result = new ABTreeNode(_abTree.ABTreeLines[layer].ABTreeItems[index])
-            {
-                LeftChild = GenTreeNode(layer + 1, index*2),
-                RightChild = GenTreeNode(layer + 1, index*2 + 1)
-            };
 
             return result;
         }
 
-        public List<ABTreeItem> FindBestPos()
+        private void FindBestPos()
         {
+            _lastNode = _baseNode;
+            _baseNode.ABTreeItem.Handling = true;
+
+            Configs.ExcutSemaphore.WaitOne();
+            Configs.EnableNextStep();
+
             _computeTimes = 0;
             _abCut = 0;
             var maxGoleABTreeItemList = new List<ABTreeItem>();
-            var maxGole = int.MinValue;
+            var maxGole = Configs.MIN;
 
             for (var i = 0; i < 2; i++)
             {
-                var tempGole = -ComputeMaxMin(
+                var tempGole = ComputeMaxMin(
                     _baseNode[i],
-                    1,
-                    int.MinValue,
-                    -maxGole);
+                    Configs.MIN,
+                    maxGole);
                 if (tempGole == maxGole)
                 {
                     maxGoleABTreeItemList.Add(_baseNode[i].ABTreeItem);
@@ -58,39 +71,77 @@ namespace AlphaBetaCut
                 }
             }
             Configs.LogMsg($"搜索完成，共递归{_computeTimes}次，ab剪枝{_abCut}次");
-            return maxGoleABTreeItemList;
+            Configs.ComputeFinished();
         }
 
-        private int ComputeMaxMin(ABTreeNode treeNode, int deep, int alpha, int beta)
+        private int ComputeMaxMin(ABTreeNode treeNode, int alpha, int beta)
         {
-            _computeTimes++;
+            _lastNode.ABTreeItem.Handling = false;
+            _lastNode = treeNode;
+            treeNode.ABTreeItem.Handling = true;
             treeNode.ABTreeItem.Alpha = alpha;
             treeNode.ABTreeItem.Beta = beta;
-            var maxGole = int.MinValue;
 
-            for (var i = 0; i < 2; i++)
+            Configs.ExcutSemaphore.WaitOne();
+            Configs.EnableNextStep();
+
+            var maxGole = Configs.MIN;
+
+
+            for (var i = 0; i < Configs.CHILD_COUNT; i++)
             {
                 int tempGole;
-                if (deep < _abTree.LayerCount)
+                if (treeNode[i].IsLeafNode)
                 {
-                    tempGole = -ComputeMaxMin(
-                        treeNode[i],
-                        deep + 1,
-                        -beta,
-                        -maxGole);
+                    _lastNode.ABTreeItem.Handling = false;
+                    _lastNode = treeNode[i];
+                    treeNode[i].ABTreeItem.Handling = true;
+
+                    tempGole = treeNode[i].ABTreeItem.Gole;
+                    _computeTimes++;
+
+                    treeNode[i].ABTreeItem.Alpha = alpha;
+                    treeNode[i].ABTreeItem.Beta = beta;
+
+                    Configs.ExcutSemaphore.WaitOne();
+                    Configs.EnableNextStep();
+
+                    treeNode[i].ABTreeItem.Best = tempGole;
                 }
                 else
                 {
-                    tempGole = treeNode.ABTreeItem.Gole;
+                    tempGole = ComputeMaxMin(
+                        treeNode[i],
+                        -beta,
+                        -maxGole);
                 }
+                maxGole = Math.Max(maxGole, tempGole);
+
+                _lastNode.ABTreeItem.Handling = false;
+                _lastNode = treeNode;
+                treeNode.ABTreeItem.Handling = true;
+                treeNode.ABTreeItem.Best = maxGole;
+
+                Configs.ExcutSemaphore.WaitOne();
+                Configs.EnableNextStep();
+
                 if (tempGole >= beta)
                 {
                     _abCut++;
+                    Configs.LogMsg($"Alpha Beta Cut 一次，共：{_abCut}次");
+
+                    for (int j = i + 1; j < Configs.CHILD_COUNT; j++)
+                    {
+                        treeNode[j].ABTreeItem.ShowAbCut();
+                    }
+
+
                     return tempGole;
                 }
 
-                maxGole = Math.Max(maxGole, tempGole);
+                
             }
+
             treeNode.ABTreeItem.Best = maxGole;
             return maxGole;
         }

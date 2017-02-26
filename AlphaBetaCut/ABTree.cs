@@ -12,7 +12,7 @@ namespace AlphaBetaCut
 {
     public partial class ABTree : UserControl
     {
-        private int _layerCount = 6;
+        private int _layerCount;
 
         public ABTreeLine[] ABTreeLines;
 

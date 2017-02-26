@@ -1,6 +1,6 @@
 ﻿namespace AlphaBetaCut
 {
-    partial class ABTreeItem
+    sealed partial class ABTreeItem
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -32,6 +32,7 @@
             this.alphaLabel = new System.Windows.Forms.Label();
             this.betaLabel = new System.Windows.Forms.Label();
             this.bestLabel = new System.Windows.Forms.Label();
+            this.showAbCutLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox
@@ -42,6 +43,7 @@
             this.textBox.Size = new System.Drawing.Size(43, 21);
             this.textBox.TabIndex = 0;
             this.textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // alphaLabel
             // 
@@ -70,12 +72,24 @@
             this.bestLabel.TabIndex = 3;
             this.bestLabel.Text = "B：999";
             // 
+            // showAbCutLabel
+            // 
+            this.showAbCutLabel.BackColor = System.Drawing.Color.DarkOrange;
+            this.showAbCutLabel.Location = new System.Drawing.Point(0, 0);
+            this.showAbCutLabel.Name = "showAbCutLabel";
+            this.showAbCutLabel.Size = new System.Drawing.Size(43, 57);
+            this.showAbCutLabel.TabIndex = 4;
+            this.showAbCutLabel.Text = "AB_CUT";
+            this.showAbCutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.showAbCutLabel.Visible = false;
+            // 
             // ABTreeItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Moccasin;
+            this.Controls.Add(this.showAbCutLabel);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.betaLabel);
             this.Controls.Add(this.alphaLabel);
@@ -95,5 +109,6 @@
         private System.Windows.Forms.Label alphaLabel;
         private System.Windows.Forms.Label betaLabel;
         private System.Windows.Forms.Label bestLabel;
+        private System.Windows.Forms.Label showAbCutLabel;
     }
 }

@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Configs.cs" />
     <Compile Include="Entities.cs" />
+    <Compile Include="HandleCtrlInOtherThread.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

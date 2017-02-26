@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AlphaBetaCut
 {
@@ -47,34 +48,36 @@ namespace AlphaBetaCut
 
     public class ABTreeNode
     {
-        public ABTreeNode(ABTreeItem abTreeItem)
+        private readonly ABTreeNode[] _abTreeNodeChildren;
+
+        public ABTreeNode(ABTreeItem abTreeItem, bool isLeafNode = false)
         {
+            IsLeafNode = isLeafNode;
+            if (!isLeafNode)
+            {
+                _abTreeNodeChildren = new ABTreeNode[Configs.CHILD_COUNT];
+            }
             ABTreeItem = abTreeItem;
         }
 
+        public bool IsLeafNode { private set; get; }
+
         public ABTreeItem ABTreeItem { get; }
-        public ABTreeNode LeftChild { set; get; }
-        public ABTreeNode RightChild { set; get; }
 
         public ABTreeNode this[int index]
         {
-            get 
-            {
-                if (index == 0)
-                {
-                    return LeftChild;
-                }
-                if (index == 1)
-                {
-                    return RightChild;
-                }
-                return null;
-            }
+            get { return _abTreeNodeChildren[index]; }
+            set { _abTreeNodeChildren[index] = value; }
         }
 
         public override string ToString()
         {
             return ABTreeItem.ToString();
+        }
+
+        public static implicit operator bool(ABTreeNode node)
+        {
+            return node != null;
         }
     }
 }

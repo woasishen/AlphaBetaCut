@@ -1,8 +1,10 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace AlphaBetaCut
 {
-    public partial class ABTreeItem : UserControl
+    public sealed partial class ABTreeItem : UserControl
     {
         private const string BEST = "B：{0}";
         private const string ALPHA = "α:{0}";
@@ -21,7 +23,27 @@ namespace AlphaBetaCut
             Alpha = Alpha;
             Beta = Beta;
             Gole = Gole;
-            bestLabel.Text = $@"[{_layer},{_index}]";
+
+            BackColor = Configs.OriginColor(_index);
+        }
+
+        public void ShowAbCut()
+        {
+            HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+            {
+                showAbCutLabel.Show();
+            });
+        }
+
+        public bool Handling
+        {
+            set
+            {
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    BackColor = value ? Configs.SelectedColor : Configs.OriginColor(_index);
+                });
+            }
         }
 
         public override string ToString()
@@ -32,15 +54,24 @@ namespace AlphaBetaCut
         public bool TextEnable
         {
             get { return textBox.Enabled; }
-            set { textBox.Enabled = value; }
+            set
+            {
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    textBox.Enabled = value;
+                });
+            }
         }
 
         public int Best
         {
             set
             {
-                _best = value;
-                bestLabel.Text = string.Format(BEST, _best);
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    _best = value;
+                    CheckAndSetString(BEST, bestLabel, _best);
+                });
             }
             get { return _best; }
         }
@@ -49,8 +80,11 @@ namespace AlphaBetaCut
         {
             set
             {
-                _alpha = value;
-                alphaLabel.Text = string.Format(ALPHA, _alpha);
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    _alpha = value;
+                    CheckAndSetString(ALPHA, alphaLabel, _alpha);
+                });
             }
             get { return _alpha; }
         }
@@ -59,8 +93,11 @@ namespace AlphaBetaCut
         {
             set
             {
-                _beta = value;
-                betaLabel.Text = string.Format(BETA, _beta);
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    _beta = value;
+                    CheckAndSetString(BETA, betaLabel, _beta);
+                });
             }
             get { return _beta; }
         }
@@ -69,10 +106,33 @@ namespace AlphaBetaCut
         {
             set
             {
-                _gole = value;
-                textBox.Text = _gole.ToString();
+                HandleCtrlInOtherThread.HandleCtrlInBackGroundThread(this, () =>
+                {
+                    _gole = value;
+                    textBox.Text = _gole.ToString();
+                });
             }
             get { return _gole; }
+        }
+
+        private void CheckAndSetString(string str, Label label, int gole)
+        {
+            if (gole == Configs.MAX)
+            {
+                label.Text = string.Format(str, "M");
+                return;
+            }
+            if (gole == Configs.MIN)
+            {
+                label.Text = string.Format(str, "-M");
+                return;
+            }
+            label.Text = string.Format(str, gole);
+        }
+
+        private void textBox_TextChanged(object sender, System.EventArgs e)
+        {
+            int.TryParse(textBox.Text, out _gole);
         }
     }
 }
