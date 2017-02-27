@@ -58,7 +58,7 @@ namespace AlphaBetaCut
             Configs.ExcutSemaphore.WaitOne();
             Configs.EnableNextStep();
 
-            bool isMaxLayer = (Configs.LAYER_COUNT - layer) % 2 == 0;
+            var isMaxLayer = (Configs.LAYER_COUNT - layer) % 2 == 0;
 
             int? bestGole = null;
 
@@ -87,8 +87,9 @@ namespace AlphaBetaCut
                     tempGole = ComputeMaxMin(
                         layer + 1,
                         treeNode[i],
-                        alpha,
-                        bestGole ?? Configs.MAX);
+                        isMaxLayer ? bestGole ?? alpha : alpha,
+                        !isMaxLayer ? bestGole ?? beta : beta);
+
                 }
                 bestGole = isMaxLayer
                     ? bestGole == null ? tempGole : Math.Max(bestGole.Value, tempGole) 
@@ -102,9 +103,11 @@ namespace AlphaBetaCut
                 Configs.ExcutSemaphore.WaitOne();
                 Configs.EnableNextStep();
 
-                if (i != Configs.CHILD_COUNT - 1 && tempGole >= beta)
+                
+                if ((isMaxLayer && tempGole >= beta) || (!isMaxLayer && tempGole <= alpha))
                 {
-                    _abCut++;
+                    if (i != Configs.CHILD_COUNT - 1)
+                        _abCut++;
                     Configs.LogMsg($"Alpha Beta Cut 一次，共：{_abCut}次");
 
                     for (var j = i + 1; j < Configs.CHILD_COUNT; j++)
@@ -118,6 +121,11 @@ namespace AlphaBetaCut
             treeNode.ABTreeItem.Best = bestGole;
             Debug.Assert(bestGole != null, "bestGole != null");
             return bestGole.Value;
+        }
+
+        public void AbortThread()
+        {
+            _computeThread.Abort();
         }
     }
 }

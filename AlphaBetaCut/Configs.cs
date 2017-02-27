@@ -14,8 +14,8 @@ namespace AlphaBetaCut
 
         public const int MAX = 10000;
         public const int MIN = -10000;
-        public const int LAYER_COUNT = 6;
-        public const int CHILD_COUNT = 2;
+        public const int LAYER_COUNT = 4;
+        public const int CHILD_COUNT = 3;
 
         public static Color SelectedColor = Color.Aqua;
 
@@ -27,10 +27,15 @@ namespace AlphaBetaCut
 
         public static List<int> InitGole = new List<int>
         {
-            17,
-            16,
-            19,
-            19
+            99,
+            98,
+            97,
+            100,
+            1,
+            101,
+            80,
+            81,
+            82
         };
     }
 }
