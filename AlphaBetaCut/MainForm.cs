@@ -48,11 +48,5 @@ namespace AlphaBetaCut
             Configs.ExcutSemaphore.Release();
             button.Enabled = false;
         }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            _maxMin.AbortThread();
-            base.OnClosing(e);
-        }
     }
 }

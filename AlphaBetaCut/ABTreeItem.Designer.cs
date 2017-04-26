@@ -79,8 +79,8 @@
             this.showAbCutLabel.Name = "showAbCutLabel";
             this.showAbCutLabel.Size = new System.Drawing.Size(43, 57);
             this.showAbCutLabel.TabIndex = 4;
-            this.showAbCutLabel.Text = "\r\nAB_CUT";
-            this.showAbCutLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.showAbCutLabel.Text = "AB_CUT";
+            this.showAbCutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.showAbCutLabel.Visible = false;
             // 
             // ABTreeItem
@@ -89,8 +89,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Moccasin;
-            this.Controls.Add(this.textBox);
             this.Controls.Add(this.showAbCutLabel);
+            this.Controls.Add(this.textBox);
             this.Controls.Add(this.betaLabel);
             this.Controls.Add(this.alphaLabel);
             this.Controls.Add(this.bestLabel);

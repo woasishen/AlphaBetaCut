@@ -25,3 +25,12 @@ C:\Users\Administrator\Desktop\cfy_dev\AlphaBetaCut\AlphaBetaCut\obj\Debug\Alpha
 C:\Users\Administrator\Desktop\cfy_dev\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.MainForm.resources
 C:\Users\Administrator\Desktop\cfy_dev\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.Properties.Resources.resources
 C:\Users\Administrator\Desktop\cfy_dev\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.csproj.GenerateResource.Cache
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\bin\Debug\AlphaBetaCut.exe
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\bin\Debug\AlphaBetaCut.pdb
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.csprojResolveAssemblyReference.cache
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.ABTree.resources
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.ABTreeItem.resources
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.ABTreeLine.resources
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.MainForm.resources
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.Properties.Resources.resources
+C:\Users\Administrator.SC-201608021220\Documents\AlphaBetaCut\AlphaBetaCut\obj\Debug\AlphaBetaCut.csproj.GenerateResource.Cache

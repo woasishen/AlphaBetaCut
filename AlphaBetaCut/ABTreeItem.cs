@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace AlphaBetaCut
@@ -10,8 +9,8 @@ namespace AlphaBetaCut
         private const string ALPHA = "α:{0}";
         private const string BETA = "β:{0}";
 
-        private int? _best;
-        private int _alpha, _beta, _gole;
+        private int? _alpha, _beta, _best;
+        private int _gole;
 
         private readonly int _layer, _index;
 
@@ -77,7 +76,7 @@ namespace AlphaBetaCut
             get { return _best; }
         }
 
-        public int Alpha
+        public int? Alpha
         {
             set
             {
@@ -90,7 +89,7 @@ namespace AlphaBetaCut
             get { return _alpha; }
         }
 
-        public int Beta
+        public int? Beta
         {
             set
             {
@@ -137,7 +136,7 @@ namespace AlphaBetaCut
             label.Text = string.Format(str, gole);
         }
 
-        private void textBox_TextChanged(object sender, System.EventArgs e)
+        private void textBox_TextChanged(object sender, EventArgs e)
         {
             int.TryParse(textBox.Text, out _gole);
         }

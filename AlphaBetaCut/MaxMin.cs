@@ -42,90 +42,65 @@ namespace AlphaBetaCut
 
         private void FindBestPos()
         {
-            ComputeMaxMin(0, _baseNode, Configs.MIN, Configs.MAX);
+            ComputeMaxMin(Configs.LAYER_COUNT%2 == 0, _baseNode);
             Configs.LogMsg($"搜索完成，共递归{_computeTimes}次，ab剪枝{_abCut}次");
             Configs.ComputeFinished();
         }
 
-        private int ComputeMaxMin(int layer, ABTreeNode treeNode, int alpha, int beta)
+        private int ComputeMaxMin(bool isMaxLayer, ABTreeNode treeNode, int? alpha = null, int? beta = null)
         {
             _lastNode.ABTreeItem.Handling = false;
             _lastNode = treeNode;
             treeNode.ABTreeItem.Handling = true;
             treeNode.ABTreeItem.Alpha = alpha;
             treeNode.ABTreeItem.Beta = beta;
+            treeNode.ABTreeItem.Best = null;
 
             Configs.ExcutSemaphore.WaitOne();
             Configs.EnableNextStep();
 
-            var isMaxLayer = (Configs.LAYER_COUNT - layer) % 2 == 0;
-
-            int? bestGole = null;
+            if (treeNode.ABTreeItem.TextEnable)
+            {
+                _computeTimes++;
+                treeNode.ABTreeItem.Best = treeNode.ABTreeItem.Gole;
+                return treeNode.ABTreeItem.Gole;
+            }
 
             for (var i = 0; i < Configs.CHILD_COUNT; i++)
             {
-                int tempGole;
-                if (layer == Configs.LAYER_COUNT - 2)
+                var tempGole = ComputeMaxMin(
+                    !isMaxLayer,
+                    treeNode[i],
+                    isMaxLayer ? Configs.MIN : treeNode.ABTreeItem.Best,
+                    isMaxLayer ? treeNode.ABTreeItem.Best : Configs.MAX);
+                if (treeNode.ABTreeItem.Best == null)
                 {
-                    _lastNode.ABTreeItem.Handling = false;
-                    _lastNode = treeNode[i];
-                    treeNode[i].ABTreeItem.Handling = true;
-
-                    tempGole = treeNode[i].ABTreeItem.Gole;
-                    _computeTimes++;
-
-                    treeNode[i].ABTreeItem.Alpha = alpha;
-                    treeNode[i].ABTreeItem.Beta = bestGole ?? Configs.MAX;
-
-                    Configs.ExcutSemaphore.WaitOne();
-                    Configs.EnableNextStep();
-
-                    treeNode[i].ABTreeItem.Best = tempGole;
+                    treeNode.ABTreeItem.Best = tempGole;
                 }
                 else
                 {
-                    tempGole = ComputeMaxMin(
-                        layer + 1,
-                        treeNode[i],
-                        isMaxLayer ? bestGole ?? alpha : alpha,
-                        !isMaxLayer ? bestGole ?? beta : beta);
-
+                    treeNode.ABTreeItem.Best = isMaxLayer
+                        ? Math.Max(treeNode.ABTreeItem.Best.Value, tempGole)
+                        : Math.Min(treeNode.ABTreeItem.Best.Value, tempGole);
                 }
-                bestGole = isMaxLayer
-                    ? bestGole == null ? tempGole : Math.Max(bestGole.Value, tempGole) 
-                    : bestGole == null ? tempGole : Math.Min(bestGole.Value, tempGole);
 
-                _lastNode.ABTreeItem.Handling = false;
-                _lastNode = treeNode;
-                treeNode.ABTreeItem.Handling = true;
-                treeNode.ABTreeItem.Best = bestGole;
-
-                Configs.ExcutSemaphore.WaitOne();
-                Configs.EnableNextStep();
-
-                
-                if ((isMaxLayer && tempGole >= beta) || (!isMaxLayer && tempGole <= alpha))
+                if (i != Configs.CHILD_COUNT - 1)
                 {
-                    if (i != Configs.CHILD_COUNT - 1)
-                        _abCut++;
-                    Configs.LogMsg($"Alpha Beta Cut 一次，共：{_abCut}次");
-
-                    for (var j = i + 1; j < Configs.CHILD_COUNT; j++)
+                    if (alpha <= tempGole && tempGole <= beta)
                     {
-                        ABTreeNode.ShowABCut(treeNode[j]);
-                    }
+                        _abCut++;
+                        Configs.LogMsg($"Alpha Beta Cut 一次，共：{_abCut}次");
 
-                    return tempGole;
+                        for (var j = i + 1; j < Configs.CHILD_COUNT; j++)
+                        {
+                            ABTreeNode.ShowABCut(treeNode[j]);
+                        }
+
+                        return tempGole;
+                    }
                 }
             }
-            treeNode.ABTreeItem.Best = bestGole;
-            Debug.Assert(bestGole != null, "bestGole != null");
-            return bestGole.Value;
-        }
-
-        public void AbortThread()
-        {
-            _computeThread.Abort();
+            return treeNode.ABTreeItem.Best ?? 0;
         }
     }
 }
