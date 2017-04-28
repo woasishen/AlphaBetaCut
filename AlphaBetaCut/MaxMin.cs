@@ -29,20 +29,20 @@ namespace AlphaBetaCut
         private ABTreeNode GenTreeNode(int layer, int index)
         {
             var result = new ABTreeNode(_abTree.ABTreeLines[layer].ABTreeItems[index]);
-            if (layer == Configs.LAYER_COUNT - 1)
+            if (layer == Configs.Depth - 1)
             {
                 return result;
             }
-            for (var i = 0; i < Configs.CHILD_COUNT; i++)
+            for (var i = 0; i < Configs.ChildCount; i++)
             {
-                result[i] = GenTreeNode(layer + 1, index * Configs.CHILD_COUNT + i);
+                result[i] = GenTreeNode(layer + 1, index * Configs.ChildCount + i);
             }
             return result;
         }
 
         private void FindBestPos()
         {
-            ComputeMaxMin(Configs.LAYER_COUNT%2 == 0, _baseNode);
+            ComputeMaxMin(Configs.Depth%2 == 0, _baseNode);
             Configs.LogMsg($"搜索完成，共递归{_computeTimes}次，ab剪枝{_abCut}次");
             Configs.ComputeFinished();
         }
@@ -66,7 +66,7 @@ namespace AlphaBetaCut
                 return treeNode.ABTreeItem.Gole;
             }
 
-            for (var i = 0; i < Configs.CHILD_COUNT; i++)
+            for (var i = 0; i < Configs.ChildCount; i++)
             {
                 var tempGole = ComputeMaxMin(
                     !isMaxLayer,
@@ -84,14 +84,14 @@ namespace AlphaBetaCut
                         : Math.Min(treeNode.ABTreeItem.Best.Value, tempGole);
                 }
 
-                if (i != Configs.CHILD_COUNT - 1)
+                if (Configs.UseAbCut && i != Configs.ChildCount - 1)
                 {
                     if (alpha <= tempGole && tempGole <= beta)
                     {
                         _abCut++;
                         Configs.LogMsg($"Alpha Beta Cut 一次，共：{_abCut}次");
 
-                        for (var j = i + 1; j < Configs.CHILD_COUNT; j++)
+                        for (var j = i + 1; j < Configs.ChildCount; j++)
                         {
                             ABTreeNode.ShowABCut(treeNode[j]);
                         }

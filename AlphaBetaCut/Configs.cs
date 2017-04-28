@@ -7,6 +7,7 @@ namespace AlphaBetaCut
 {
     public static class Configs
     {
+        public static bool UseAbCut = true;
         public static Action<string> LogMsg;
         public static Action EnableNextStep;
         public static Action ComputeFinished;
@@ -14,14 +15,14 @@ namespace AlphaBetaCut
 
         public const int MAX = 10000;
         public const int MIN = -10000;
-        public const int LAYER_COUNT = 6;
-        public const int CHILD_COUNT = 2;
+        public static int Depth = 4;
+        public static int ChildCount = 2;
 
         public static Color SelectedColor = Color.Aqua;
 
         public static Color OriginColor(int index)
         {
-            return index / CHILD_COUNT % 2 == 0 ? Color.Wheat : Color.FloralWhite;
+            return index / ChildCount % 2 == 0 ? Color.Wheat : Color.FloralWhite;
         }
 
 

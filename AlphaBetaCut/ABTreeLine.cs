@@ -8,14 +8,14 @@ namespace AlphaBetaCut
         public ABTreeItem[] ABTreeItems;
         public int LayerIndex
         {
-            set { label.Text = value + Environment.NewLine + ((Configs.LAYER_COUNT - value)%2 == 0 ? "Min" : "Max"); }
+            set { label.Text = value + Environment.NewLine + ((Configs.Depth - value)%2 == 0 ? "Min" : "Max"); }
         }
         public ABTreeLine(int layerIndex, bool enableText)
         {
             InitializeComponent();
             LayerIndex = layerIndex;
 
-            tableLayoutPanel.ColumnCount = (int) Math.Pow(Configs.CHILD_COUNT, layerIndex);
+            tableLayoutPanel.ColumnCount = (int) Math.Pow(Configs.ChildCount, layerIndex);
             for (var i = 1; i < tableLayoutPanel.ColumnCount; i++)
             {
                 tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));

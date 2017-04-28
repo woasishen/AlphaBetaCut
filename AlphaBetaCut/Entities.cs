@@ -52,7 +52,7 @@ namespace AlphaBetaCut
 
         public ABTreeNode(ABTreeItem abTreeItem)
         {
-            _abTreeNodeChildren = new ABTreeNode[Configs.CHILD_COUNT];
+            _abTreeNodeChildren = new ABTreeNode[Configs.ChildCount];
             ABTreeItem = abTreeItem;
         }
 

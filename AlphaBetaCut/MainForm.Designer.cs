@@ -33,18 +33,20 @@
             this.startButton = new System.Windows.Forms.Button();
             this.button = new System.Windows.Forms.Button();
             this.abTree = new AlphaBetaCut.ABTree();
+            this.UseAbCut = new System.Windows.Forms.CheckBox();
             this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // bottomPanel
             // 
+            this.bottomPanel.Controls.Add(this.UseAbCut);
             this.bottomPanel.Controls.Add(this.richTextBox);
             this.bottomPanel.Controls.Add(this.startButton);
             this.bottomPanel.Controls.Add(this.button);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bottomPanel.Location = new System.Drawing.Point(0, 502);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(1643, 248);
+            this.bottomPanel.Size = new System.Drawing.Size(1643, 197);
             this.bottomPanel.TabIndex = 1;
             // 
             // richTextBox
@@ -55,7 +57,7 @@
             this.richTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox.Location = new System.Drawing.Point(152, 0);
             this.richTextBox.Name = "richTextBox";
-            this.richTextBox.Size = new System.Drawing.Size(1488, 245);
+            this.richTextBox.Size = new System.Drawing.Size(1488, 194);
             this.richTextBox.TabIndex = 2;
             this.richTextBox.Text = "";
             // 
@@ -90,17 +92,29 @@
             this.abTree.Size = new System.Drawing.Size(1643, 502);
             this.abTree.TabIndex = 0;
             // 
+            // UseAbCut
+            // 
+            this.UseAbCut.AutoSize = true;
+            this.UseAbCut.Location = new System.Drawing.Point(42, 146);
+            this.UseAbCut.Name = "UseAbCut";
+            this.UseAbCut.Size = new System.Drawing.Size(60, 16);
+            this.UseAbCut.TabIndex = 3;
+            this.UseAbCut.Text = "AB剪枝";
+            this.UseAbCut.UseVisualStyleBackColor = true;
+            this.UseAbCut.CheckedChanged += new System.EventHandler(this.UseAbCut_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1643, 750);
+            this.ClientSize = new System.Drawing.Size(1643, 699);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.abTree);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.bottomPanel.ResumeLayout(false);
+            this.bottomPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -112,6 +126,7 @@
         private System.Windows.Forms.RichTextBox richTextBox;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button button;
+        private System.Windows.Forms.CheckBox UseAbCut;
     }
 }
 

@@ -16,7 +16,14 @@ namespace AlphaBetaCut
         public MainForm()
         {
             InitializeComponent();
-            abTree.LayerCount = Configs.LAYER_COUNT;
+
+            using (var form = new SelectDepthForm())
+            {
+                form.ShowDialog();
+            }
+
+            Configs.UseAbCut = UseAbCut.Checked;
+            abTree.LayerCount = Configs.Depth;
             _maxMin = new MaxMin(abTree);
             Configs.LogMsg += s =>
             {
@@ -47,6 +54,11 @@ namespace AlphaBetaCut
         {
             Configs.ExcutSemaphore.Release();
             button.Enabled = false;
+        }
+
+        private void UseAbCut_CheckedChanged(object sender, EventArgs e)
+        {
+            Configs.UseAbCut = UseAbCut.Checked;
         }
     }
 }
